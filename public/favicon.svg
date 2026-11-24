@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Royal Deep Maroon Circle -->
+  <circle cx="50" cy="50" r="48" fill="#812C32" stroke="#C6A15B" stroke-width="3"/>
+  <!-- Inner Ornamental Gold Circle -->
+  <circle cx="50" cy="50" r="42" stroke="#E3C98D" stroke-width="1" stroke-dasharray="2 3"/>
+  <!-- Golden Kuthu Vilakku (Traditional Brass Lamp) -->
+  <!-- Base -->
+  <path d="M35 82 C35 78, 65 78, 65 82 L70 86 C70 88, 30 88, 30 86 Z" fill="#C6A15B"/>
+  <path d="M44 78 L44 55 L56 55 L56 78 Z" fill="#A5813F"/>
+  <!-- Stem Nodes -->
+  <ellipse cx="50" cy="65" rx="8" ry="3" fill="#E3C98D"/>
+  <ellipse cx="50" cy="54" rx="14" ry="4" fill="#C6A15B"/>
+  <!-- Oil Bowl -->
+  <path d="M30 54 Q50 62 70 54 Q65 48 50 48 Q35 48 30 54 Z" fill="#C6A15B"/>
+  <!-- Diya Flame -->
+  <path d="M50 46 C46 40, 44 32, 50 20 C56 32, 54 40, 50 46 Z" fill="#E69500"/>
+  <path d="M50 43 C48 38, 47 33, 50 26 C53 33, 52 38, 50 43 Z" fill="#FFF275"/>
+  <!-- Flame Aura -->
+  <circle cx="50" cy="30" r="16" fill="url(#flameGlow)" opacity="0.6"/>
+  <defs>
+    <radialGradient id="flameGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE885" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#C6A15B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

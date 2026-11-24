@@ -1,0 +1,311 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-ivory: #FAF6ED;
+    --color-cream: #FFF9EE;
+    --color-maroon: #70212B;
+    --color-maroon-dark: #581720;
+    --color-maroon-deep: #421118;
+    --color-gold: #C69A45;
+    --color-gold-soft: #E4CA8E;
+    --color-gold-deep: #96702D;
+    --color-ink: #725D4C;
+    --color-muted: #8E7B6C;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Prevent iOS zoom on inputs */
+  @media (max-width: 768px) {
+    input, textarea, select {
+      font-size: 16px !important;
+    }
+  }
+
+  /* Custom Royal Gold & Maroon Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F8F2E4;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C6A15B;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #812C32;
+  }
+
+  /* Tamil Font Adjustments */
+  html[lang="ta"] h1,
+  html[lang="ta"] h2,
+  html[lang="ta"] h3,
+  html[lang="ta"] .font-tamil {
+    font-family: 'Noto Serif Tamil', 'Noto Sans Tamil', Georgia, serif;
+    line-height: 1.45;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes audioEqualizer {
+  0%, 100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-audio-equalizer {
+  animation: audioEqualizer 0.65s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.btn-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
+}
+
+/* Authentic South Indian Temple Oil Lamp Flame Flicker */
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.85)) drop-shadow(0 0 16px rgba(251, 191, 36, 0.5));
+  }
+  20% {
+    transform: scale(1.06, 0.94) rotate(-1.5deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 14px rgba(251, 191, 36, 0.95)) drop-shadow(0 0 22px rgba(245, 158, 11, 0.6));
+  }
+  40% {
+    transform: scale(0.95, 1.05) rotate(1.8deg);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 7px rgba(245, 158, 11, 0.75)) drop-shadow(0 0 14px rgba(251, 191, 36, 0.45));
+  }
+  60% {
+    transform: scale(1.05, 0.97) rotate(-0.8deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 24px rgba(245, 158, 11, 0.65));
+  }
+  80% {
+    transform: scale(0.97, 1.03) rotate(1.2deg);
+    opacity: 0.92;
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.8)) drop-shadow(0 0 18px rgba(251, 191, 36, 0.5));
+  }
+}
+
+.animate-flame {
+  animation: flameFlicker 2.2s infinite ease-in-out;
+  transform-origin: 50% 90%;
+}
+
+.animate-flame-delayed {
+  animation: flameFlicker 2.6s infinite ease-in-out 0.4s;
+  transform-origin: 50% 90%;
+}
+
+/* Sacred Temple Diya Ember Sparks */
+@keyframes emberRise {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.7;
+    transform: translateY(-24px) translateX(var(--drift, 4px)) scale(1.1);
+  }
+  100% {
+    transform: translateY(-34px) translateX(var(--drift, -4px)) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.animate-ember {
+  animation: emberRise 2.6s infinite ease-out;
+}
+
+/* Card Falling Flower Petals */
+@keyframes cardPetalFall {
+  0% {
+    transform: translate3d(0, -20px, 0) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate3d(14px, 300px, 0) rotate(180deg) scale(1);
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(-12px, 600px, 0) rotate(360deg) scale(0.85);
+    opacity: 0;
+  }
+}
+
+.animate-card-petal {
+  animation: cardPetalFall 12s infinite linear;
+}
+
+/* Pulsing Radiant Golden Light Aura around Lamp */
+@keyframes auraPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.8;
+  }
+}
+
+.animate-aura {
+  animation: auraPulse 3.5s infinite ease-in-out;
+}
+
+/* Swaying Temple Bells with Natural Pendulum Physics */
+@keyframes bellSwingLeft {
+  0%, 100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes bellSwingRight {
+  0%, 100% {
+    transform: rotate(6deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+}
+
+.animate-bell-swing-left {
+  animation: bellSwingLeft 3.2s infinite ease-in-out alternate;
+  transform-origin: top center;
+}
+
+.animate-bell-swing-right {
+  animation: bellSwingRight 3.4s infinite ease-in-out alternate 0.5s;
+  transform-origin: top center;
+}
+
+/* Swaying Flower Garlands */
+@keyframes garlandSway {
+  0%, 100% {
+    transform: rotate(-1.5deg);
+  }
+  50% {
+    transform: rotate(1.5deg);
+  }
+}
+
+.animate-garland-sway {
+  animation: garlandSway 4s infinite ease-in-out alternate;
+  transform-origin: top center;
+}
+
+.animate-garland-sway-delayed {
+  animation: garlandSway 4.4s infinite ease-in-out alternate 0.8s;
+  transform-origin: top center;
+}
+
+/* Shimmering Golden Star Dust */
+@keyframes sparkleTwinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.6) translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-4px);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkleTwinkle 2.5s infinite ease-in-out;
+}
+
+/* Slow Cinematic Portrait Breathing Zoom */
+@keyframes portraitBreathing {
+  0%, 100% {
+    transform: scale(1.0);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+.animate-portrait-breath {
+  animation: portraitBreathing 14s infinite ease-in-out;
+}
+
+/* Metallic Gold Text Shimmer */
+.gold-text-shimmer {
+  background: linear-gradient(90deg, #641F29 0%, #C6A15B 25%, #FFFDF7 50%, #C6A15B 75%, #641F29 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
