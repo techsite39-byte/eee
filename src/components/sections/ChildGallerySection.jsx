@@ -2,13 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { galleryConfig } from '../../data/galleryConfig';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export const ChildGallerySection = ({ config, lang }) => {
-  const isTa = lang === 'ta';
+export const ChildGallerySection = ({ config }) => {
+  const { lang, isTa, t } = useLanguage();
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
 
@@ -56,32 +57,30 @@ export const ChildGallerySection = ({ config, lang }) => {
     <section
       id="gallery"
       ref={containerRef}
-      className="relative py-20 sm:py-28 px-4 sm:px-6 bg-[#3b0d14] text-cream overflow-hidden"
+      className="relative py-20 sm:py-28 px-4 sm:px-6 bg-[#3b0d14] text-[#FFF9EE] overflow-hidden"
     >
       {/* Background Subtle Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#420f17] via-[#350a11] to-[#3b0d14]" />
 
       <div className="max-w-md sm:max-w-xl mx-auto relative z-10 text-center">
         
-        {/* Eyebrow Header (Reference 1 & Image 4 style) */}
-        <p className="text-[10px] sm:text-xs uppercase tracking-[0.25em] font-sans font-semibold text-gold-soft mb-2">
-          {isTa ? 'மழலை பொக்கிஷம் • திருவுருவப் படங்கள்' : 'SACRED MOMENTS • FOREVER CHERISHED'}
+        {/* Eyebrow Header */}
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.25em] font-sans font-semibold text-[#E4CA8E] mb-2 font-tamil">
+          {t.gallery.badge}
         </p>
 
-        {/* Heading: "Little Moments" (White + Italic Gold Script) */}
-        <h2 className="text-4xl sm:text-6xl font-serif text-cream leading-tight mb-2">
-          <span>{isTa ? 'மழலை ' : 'Little '}</span>
-          <span className="italic text-gold-soft font-normal">{isTa ? 'நினைவுகள்' : 'Moments'}</span>
+        {/* Heading: "Little Moments" */}
+        <h2 className="text-4xl sm:text-6xl font-serif text-[#FFF9EE] leading-tight mb-2 font-tamil">
+          <span>{t.gallery.titlePrefix}</span>
+          <span className="italic text-[#E4CA8E] font-normal">{t.gallery.titleHighlight}</span>
         </h2>
 
-        {/* Subtitle from Reference 2 */}
-        <p className="text-xs sm:text-sm font-serif italic text-gold-soft/80 max-w-sm mx-auto mb-12 sm:mb-16">
-          {isTa
-            ? 'எங்கள் இல்லத்துச் செல்வங்களின் மழலைச் சிரிப்பும், மங்களப் பொருட்களும் நிறைந்த அழகிய காட்சிகள்.'
-            : 'The little moments that become a lifetime of precious memories.'}
+        {/* Subtitle */}
+        <p className="text-xs sm:text-sm font-serif italic text-[#E4CA8E]/80 max-w-sm mx-auto mb-12 sm:mb-16 font-tamil">
+          {t.gallery.subtitle}
         </p>
 
-        {/* Polaroid Cards Stack with Washi Tape (Image 4 Reference) */}
+        {/* Polaroid Cards Stack with Washi Tape */}
         <div className="space-y-12 sm:space-y-16 flex flex-col items-center">
           {galleryConfig.map((item, idx) => (
             <div
@@ -105,10 +104,10 @@ export const ChildGallerySection = ({ config, lang }) => {
 
               {/* Polaroid Footer Text */}
               <div className="mt-4 sm:mt-5 text-center px-2">
-                <span className="text-[10px] tracking-widest font-mono text-muted uppercase block mb-1">
+                <span className="text-[10px] tracking-widest font-mono text-[#8E7B6C] uppercase block mb-1">
                   0{item.id} • {isTa ? item.tagTamil : item.tag}
                 </span>
-                <p className="font-serif italic text-sm sm:text-base text-maroon-dark leading-snug">
+                <p className="font-serif italic text-sm sm:text-base text-[#581720] leading-snug font-tamil">
                   {isTa ? item.captionTamil : item.captionEnglish}
                 </p>
               </div>

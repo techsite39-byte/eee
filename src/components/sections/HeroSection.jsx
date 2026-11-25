@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { GoldSparkle } from '../common/Ornaments';
+import { useLanguage } from '../../i18n/LanguageContext';
 
-export const HeroSection = ({ config, lang }) => {
-  const isTa = lang === 'ta';
+export const HeroSection = ({ config }) => {
+  const { lang, isTa, t } = useLanguage();
 
   // Live Real-Time Countdown to 29 November 2026, 9:30 AM IST
   const [timeLeft, setTimeLeft] = useState({
@@ -55,12 +56,11 @@ export const HeroSection = ({ config, lang }) => {
 
       {/* ======================================================== */}
       {/* TOP DIVINE INVOCATION BANNER                             */}
-      {/* (Clean single-line banner with gold dots)                */}
       {/* ======================================================== */}
       <div className="w-full max-w-[390px] sm:max-w-[430px] mx-auto mb-2.5 px-3 py-1.5 rounded-full bg-[#FFF9EE]/95 border border-[#C69A45]/45 shadow-xs flex items-center justify-center gap-1.5 z-10">
         <span className="w-1.5 h-1.5 rounded-full bg-[#C69A45] animate-pulse shrink-0" />
         <p className="text-[8.5px] sm:text-[10px] font-semibold text-[#96702D] tracking-[0.12em] uppercase font-serif text-center font-tamil whitespace-nowrap overflow-hidden text-ellipsis">
-          {isTa ? config.event.blessingTamil : config.event.blessingEnglish}
+          {t.hero.divineBanner}
         </p>
         <span className="w-1.5 h-1.5 rounded-full bg-[#C69A45] animate-pulse shrink-0" />
       </div>
@@ -83,10 +83,9 @@ export const HeroSection = ({ config, lang }) => {
         {/* (Located at top apex of arch: center x=50%, y=3.4%)      */}
         {/* ======================================================== */}
         <div className="absolute top-[1.4%] left-[46.2%] w-[7.6%] h-[4.5%] pointer-events-none flex items-center justify-center z-20">
-          {/* Breathing warm amber-gold radial halo */}
           <div className="absolute -inset-2.5 rounded-full bg-[radial-gradient(circle,_rgba(255,200,80,0.55)_0%,_rgba(255,140,20,0.22)_50%,_transparent_75%)] animate-aura" />
 
-          {/* SVG Realistic Teardrop Flame with organic temple flicker physics */}
+          {/* SVG Realistic Teardrop Flame */}
           <svg
             viewBox="0 0 32 48"
             className="w-full h-full animate-flame filter drop-shadow-[0_0_10px_rgba(255,180,30,0.9)]"
@@ -104,12 +103,10 @@ export const HeroSection = ({ config, lang }) => {
                 <stop offset="100%" stopColor="#F59E0B" stopOpacity="0" />
               </linearGradient>
             </defs>
-            {/* Outer Flame Teardrop */}
             <path
               d="M16 2 C22 14, 28 24, 28 34 C28 41.7, 22.6 47, 16 47 C9.4 47, 4 41.7, 4 34 C4 24, 10 14, 16 2 Z"
               fill="url(#diyaFlameGrad)"
             />
-            {/* Inner Intense Glow */}
             <path
               d="M16 12 C19.5 20, 23 27, 23 35 C23 39.5, 19.8 43, 16 43 C12.2 43, 9 39.5, 9 35 C9 27, 12.5 20, 16 12 Z"
               fill="url(#diyaInnerCore)"
@@ -122,56 +119,48 @@ export const HeroSection = ({ config, lang }) => {
           <div className="absolute -top-3 w-1 h-1 rounded-full bg-yellow-100 animate-ember opacity-90" style={{ '--drift': '3px', animationDelay: '1.7s' }} />
         </div>
 
-
-
         {/* ======================================================== */}
         {/* 4. HERO CHILD PORTRAIT                                   */}
-        {/* (Dedicated natural fit inside decorative gold arch)      */}
         {/* ======================================================== */}
         <div className="absolute top-[14.6%] left-[20.7%] w-[58.7%] h-[27.1%] overflow-hidden rounded-t-[200px] pointer-events-none z-10">
           <img
             src={config.child.photoUrl || '/images/child-main.jpg'}
-            alt={isTa ? config.child.nameTamil : config.child.nameEnglish}
+            alt={t.hero.childrenNames}
             className="w-full h-full object-cover object-[center_18%]"
           />
         </div>
 
         {/* ======================================================== */}
-        {/* 5. SAVE THE DATE TEXT (Cleanly in open cream space)      */}
-        {/* (y=775..810, well above the floral divider at y=820)     */}
+        {/* 5. SAVE THE DATE TEXT                                    */}
         {/* ======================================================== */}
         <div className="absolute top-[42.8%] left-[10%] right-[10%] h-[2.0%] flex items-center justify-center pointer-events-none z-10">
           <p className="text-[9.5px] sm:text-[11px] uppercase tracking-[0.24em] font-serif font-bold text-[#96702D] font-tamil drop-shadow-2xs">
-            {isTa ? 'சுப நன்னாளைக் குறித்துக் கொள்ளுங்கள்' : 'SAVE THE DATE'}
+            {t.hero.saveTheDate}
           </p>
         </div>
 
         {/* ======================================================== */}
         {/* 6. PANEL 1: CHILDREN NAMES & SACRED ORNAMENT SUBTITLE    */}
-        {/* (Centered inside the first cream pill panel: y=850..970) */}
         {/* ======================================================== */}
         <div className="absolute top-[47.0%] left-[13.5%] right-[13.5%] h-[6.5%] flex flex-col items-center justify-center text-center px-2 pointer-events-auto z-10">
-          {/* Children Names */}
-          <h1 className="text-[16px] sm:text-[19px] md:text-[21px] font-serif font-bold text-[#70212B] tracking-wide leading-tight drop-shadow-2xs font-tamil">
-            {isTa ? config.child.nameTamil : config.child.nameEnglish}
+          <h1 className="text-[15px] sm:text-[18px] md:text-[20px] font-serif font-bold text-[#70212B] tracking-wide leading-tight drop-shadow-2xs font-tamil">
+            {t.hero.childrenNames}
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-[8.5px] sm:text-[10px] font-serif italic text-[#725D4C] mt-1 leading-tight font-tamil">
-            {isTa ? config.child.titleTamil : config.child.titleEnglish} • {isTa ? config.child.goldOrnamentTamil : config.child.goldOrnamentEnglish}
+          <p className="text-[8.5px] sm:text-[9.5px] font-serif italic text-[#725D4C] mt-1 leading-tight font-tamil">
+            {t.hero.childrenSubtitle}
           </p>
         </div>
 
         {/* ======================================================== */}
         {/* 7. PANEL 2: DATE & AUSPICIOUS MUHURTHAM TIMING          */}
-        {/* (Centered layout with aligned icons & text inside border) */}
         {/* ======================================================== */}
         <div className="absolute top-[57.2%] left-[12%] right-[12%] h-[7.8%] flex flex-col items-center justify-center text-center px-2 pointer-events-auto z-10">
           {/* Row 1: Event Date & Calendar Icon */}
           <div className="flex items-center justify-center gap-1.5 sm:gap-2 w-full max-w-sm">
             <span className="text-xs sm:text-sm text-[#96702D] shrink-0" aria-hidden="true">📅</span>
             <span className="text-[10px] sm:text-[11.5px] md:text-[12px] font-serif font-bold text-[#70212B] leading-tight font-tamil tracking-wide whitespace-nowrap overflow-hidden text-ellipsis">
-              {isTa ? config.event.dateFormattedTamil : config.event.dateFormattedEnglish}
+              {t.hero.eventDate}
             </span>
           </div>
 
@@ -179,21 +168,20 @@ export const HeroSection = ({ config, lang }) => {
           <div className="flex items-center justify-center gap-1.5 sm:gap-2 w-full max-w-sm mt-0.5 sm:mt-1">
             <span className="text-xs sm:text-sm text-[#96702D] shrink-0" aria-hidden="true">⏰</span>
             <span className="text-[9px] sm:text-[10.5px] md:text-[11px] font-serif font-semibold text-[#96702D] leading-tight font-tamil whitespace-nowrap overflow-hidden text-ellipsis">
-              {isTa ? `சுப முகூர்த்தம்: ${config.event.muhurthamTimeTamil}` : `Muhurtham: ${config.event.muhurthamTimeEnglish}`}
+              {t.hero.muhurthamTime}
             </span>
           </div>
         </div>
 
         {/* ======================================================== */}
         {/* 8. COUNTDOWN CARDS: EQUAL-WIDTH CSS GRID LAYOUT          */}
-        {/* (Equal width, equal height, consistent gaps & centered)  */}
         {/* ======================================================== */}
         <div className="absolute top-[68.8%] left-[10.5%] right-[10.5%] h-[7.2%] grid grid-cols-4 gap-1.5 sm:gap-2.5 z-10 pointer-events-auto">
           {[
-            { labelEn: 'DAYS', labelTa: 'நாட்கள்', val: timeLeft.days },
-            { labelEn: 'HOURS', labelTa: 'மணிகள்', val: timeLeft.hours },
-            { labelEn: 'MINS', labelTa: 'நிமிடங்கள்', val: timeLeft.minutes },
-            { labelEn: 'SECS', labelTa: 'நொடிகள்', val: timeLeft.seconds },
+            { label: t.hero.countdown.days, val: timeLeft.days },
+            { label: t.hero.countdown.hours, val: timeLeft.hours },
+            { label: t.hero.countdown.mins, val: timeLeft.minutes },
+            { label: t.hero.countdown.secs, val: timeLeft.seconds },
           ].map((unit, idx) => (
             <div
               key={idx}
@@ -203,7 +191,7 @@ export const HeroSection = ({ config, lang }) => {
                 {String(unit.val).padStart(2, '0')}
               </div>
               <div className="text-[7px] sm:text-[8px] md:text-[8.5px] font-serif font-bold text-[#96702D] mt-1 tracking-wider uppercase font-tamil">
-                {isTa ? unit.labelTa : unit.labelEn}
+                {unit.label}
               </div>
             </div>
           ))}
@@ -211,41 +199,40 @@ export const HeroSection = ({ config, lang }) => {
 
         {/* ======================================================== */}
         {/* 9. GALLERY: 3 ARTISTIC FRAMES WITH PHOTOS                */}
-        {/* Responsive flex layout fitting the artwork frames        */}
         {/* ======================================================== */}
         <div className="absolute top-[78.2%] left-[8.5%] right-[8.5%] h-[12.4%] flex items-center justify-center gap-2 sm:gap-2.5 z-10 pointer-events-auto">
           {/* Frame 1: Left Child Photo */}
           <a
             href="#gallery"
             className="flex-1 h-[90%] rounded-xl sm:rounded-2xl overflow-hidden border border-[#C69A45]/60 shadow-md group transition-all duration-300 hover:scale-105 transform -rotate-3 hover:rotate-0 relative block"
-            title={isTa ? 'குழந்தை படங்கள்' : 'Child Portraits'}
+            title={t.hero.galleryFrames.childTitle}
           >
             <img
               src="/images/child-1.jpg"
-              alt={isTa ? 'குழந்தை' : 'Child'}
+              alt={t.hero.galleryFrames.child}
               className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
             />
             <div className="absolute inset-x-0 bottom-0 h-6 sm:h-7 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end justify-center pb-0.5">
               <span className="text-[7px] sm:text-[8.5px] font-serif font-bold text-[#FFF9EE] tracking-widest uppercase drop-shadow-sm font-tamil">
-                {isTa ? 'குழந்தை' : 'CHILD'}
+                {t.hero.galleryFrames.child}
               </span>
             </div>
           </a>
 
-          {/* Frame 2: Center Family Photo (Visually prominent & taller) */}
+          {/* Frame 2: Center Family Photo */}
           <a
             href="#gallery"
             className="flex-[1.18] h-full rounded-xl sm:rounded-2xl overflow-hidden border-2 border-[#C69A45]/80 shadow-lg group transition-all duration-300 hover:scale-105 z-10 relative block"
-            title={isTa ? 'குடும்ப படங்கள்' : 'Family Portraits'}
+            title={t.hero.galleryFrames.familyTitle}
           >
             <img
               src="/images/family-1.jpg"
-              alt={isTa ? 'குடும்பம்' : 'Family'}
+              alt={t.hero.galleryFrames.family}
               className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
             />
             <div className="absolute inset-x-0 bottom-0 h-6 sm:h-7 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end justify-center pb-0.5">
               <span className="text-[7.5px] sm:text-[9px] font-serif font-bold text-[#FFF9EE] tracking-widest uppercase drop-shadow-sm font-tamil">
-                {isTa ? 'குடும்பம்' : 'FAMILY'}
+                {t.hero.galleryFrames.family}
               </span>
             </div>
           </a>
@@ -254,16 +241,16 @@ export const HeroSection = ({ config, lang }) => {
           <a
             href="#gallery"
             className="flex-1 h-[90%] rounded-xl sm:rounded-2xl overflow-hidden border border-[#C69A45]/60 shadow-md group transition-all duration-300 hover:scale-105 transform rotate-3 hover:rotate-0 relative block"
-            title={isTa ? 'விழா நிகழ்வுகள்' : 'Ceremony Moments'}
+            title={t.hero.galleryFrames.ceremonyTitle}
           >
             <img
               src="/images/ceremony.jpg"
-              alt={isTa ? 'விழா' : 'Ceremony'}
+              alt={t.hero.galleryFrames.ceremony}
               className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
             />
             <div className="absolute inset-x-0 bottom-0 h-6 sm:h-7 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end justify-center pb-0.5">
               <span className="text-[7px] sm:text-[8.5px] font-serif font-bold text-[#FFF9EE] tracking-widest uppercase drop-shadow-sm font-tamil">
-                {isTa ? 'விழா' : 'CEREMONY'}
+                {t.hero.galleryFrames.ceremony}
               </span>
             </div>
           </a>
@@ -271,7 +258,6 @@ export const HeroSection = ({ config, lang }) => {
 
         {/* ======================================================== */}
         {/* 10. BOTTOM INVITATION BUTTON                             */}
-        {/* (Centered, fully visible with gold decorative border)    */}
         {/* ======================================================== */}
         <div className="absolute bottom-[2.5%] left-[8%] right-[8%] h-[5.2%] flex items-center justify-center pointer-events-auto z-20">
           <a
@@ -279,7 +265,7 @@ export const HeroSection = ({ config, lang }) => {
             className="w-full max-w-[320px] h-full rounded-full border border-[#C69A45]/70 bg-[#FFF9EE]/90 hover:bg-[#FFF9EE] shadow-xs flex items-center justify-center gap-2 px-4 text-[#70212B] hover:text-[#96702D] font-serif font-bold text-[10px] sm:text-xs md:text-sm tracking-widest uppercase transition-all duration-300 group cursor-pointer active:scale-95"
           >
             <span className="text-xs text-[#C69A45] group-hover:scale-125 transition-transform">✨</span>
-            <span className="font-tamil">{isTa ? 'முழு அழைப்பிதழ் வாசிக்க' : 'VIEW FULL INVITATION'}</span>
+            <span className="font-tamil">{t.hero.viewFull}</span>
             <span className="text-xs text-[#96702D] animate-bounce">↓</span>
           </a>
         </div>

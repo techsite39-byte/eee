@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Globe } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
-export const Navbar = ({ lang, setLang, config, onOpenDoor }) => {
+export const Navbar = ({ config, onOpenDoor }) => {
+  const { lang, toggleLang, isTa, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -13,23 +15,21 @@ export const Navbar = ({ lang, setLang, config, onOpenDoor }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isTa = lang === 'ta';
-
   const navLinks = [
-    { href: '#hero', labelTa: 'முகப்பு', labelEn: 'Home' },
-    { href: '#scratch', labelTa: 'மங்கள ஆசி', labelEn: 'Blessings' },
-    { href: '#family', labelTa: 'அழைப்பு', labelEn: 'Family' },
-    { href: '#schedule', labelTa: 'நிகழ்வுகள்', labelEn: 'Schedule' },
-    { href: '#gallery', labelTa: 'நினைவுகள்', labelEn: 'Gallery' },
-    { href: '#event-details', labelTa: 'முகூர்த்தம்', labelEn: 'Muhurtham' },
-    { href: '#venue', labelTa: 'மண்டபம்', labelEn: 'Venue' },
-    { href: '#blessings', labelTa: 'வாழ்த்துகள்', labelEn: 'Blessings & RSVP' },
-    { href: '#thankyou', labelTa: 'நன்றி', labelEn: 'Thank You' },
+    { href: '#hero', label: t.nav.home },
+    { href: '#scratch', label: t.nav.scratch },
+    { href: '#family', label: t.nav.family },
+    { href: '#schedule', label: t.nav.schedule },
+    { href: '#gallery', label: t.nav.gallery },
+    { href: '#event-details', label: t.nav.muhurtham },
+    { href: '#venue', label: t.nav.venue },
+    { href: '#blessings', label: t.nav.blessings },
+    { href: '#thankyou', label: t.nav.thankyou },
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 w-full z-40 transition-all duration-300 ${
         scrolled
           ? 'bg-[#FAF6ED]/95 backdrop-blur-md shadow-xs border-b border-[#C69A45]/35 py-2'
           : 'bg-[#FAF6ED]/90 backdrop-blur-xs shadow-2xs border-b border-[#C69A45]/20 py-2.5 sm:py-3'
@@ -43,7 +43,7 @@ export const Navbar = ({ lang, setLang, config, onOpenDoor }) => {
         {/* Left: Small circular family logo with decorative gold border */}
         <a href="#hero" className="flex items-center group">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#C69A45]/70 bg-[#FFF9EE] shadow-xs flex items-center justify-center text-[#70212B] font-tamil font-bold text-xs sm:text-sm group-hover:scale-105 transition-transform">
-            <span>கி&சு</span>
+            <span>{t.nav.logoText}</span>
           </div>
         </a>
 
@@ -53,9 +53,9 @@ export const Navbar = ({ lang, setLang, config, onOpenDoor }) => {
             <a
               key={link.href}
               href={link.href}
-              className="px-3 py-1 rounded-full text-xs font-medium tracking-wide text-[#725D4C] hover:text-[#70212B] hover:bg-[#C69A45]/15 transition-all"
+              className="px-3 py-1 rounded-full text-xs font-medium tracking-wide text-[#725D4C] hover:text-[#70212B] hover:bg-[#C69A45]/15 transition-all font-tamil"
             >
-              {isTa ? link.labelTa : link.labelEn}
+              {link.label}
             </a>
           ))}
         </nav>
@@ -64,19 +64,20 @@ export const Navbar = ({ lang, setLang, config, onOpenDoor }) => {
         <div className="flex items-center gap-2 sm:gap-2.5">
           {/* Language Selector with Globe Icon */}
           <button
-            onClick={() => setLang(isTa ? 'en' : 'ta')}
+            onClick={toggleLang}
             className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-[#C69A45]/60 bg-[#FFF9EE]/90 hover:bg-[#FFF9EE] text-[#70212B] text-xs font-medium tracking-wide flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer active:scale-95"
-            title={isTa ? 'Switch to English' : 'தமிழுக்கு மாறுக'}
+            title={t.nav.toggleLangTitle}
+            aria-label={t.nav.toggleLangTitle}
           >
             <Globe className="w-3.5 h-3.5 text-[#96702D]" />
-            <span>{isTa ? 'English' : 'தமிழ்'}</span>
+            <span className={isTa ? 'font-sans' : 'font-tamil'}>{t.nav.toggleLangLabel}</span>
           </button>
 
           {/* Hamburger Menu with Gold Circular Border */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#C69A45]/60 bg-[#FFF9EE]/90 hover:bg-[#FFF9EE] text-[#70212B] flex items-center justify-center shadow-2xs transition-colors cursor-pointer active:scale-95"
-            aria-label="Toggle Menu"
+            aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
@@ -92,9 +93,9 @@ export const Navbar = ({ lang, setLang, config, onOpenDoor }) => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-lg text-sm font-medium hover:bg-[#C69A45]/15 hover:text-[#70212B] transition-colors"
+                className="py-2.5 px-3 rounded-lg text-sm font-medium hover:bg-[#C69A45]/15 hover:text-[#70212B] transition-colors font-tamil"
               >
-                {isTa ? link.labelTa : link.labelEn}
+                {link.label}
               </a>
             ))}
           </div>
@@ -105,13 +106,13 @@ export const Navbar = ({ lang, setLang, config, onOpenDoor }) => {
                 setMobileMenuOpen(false);
                 if (onOpenDoor) onOpenDoor();
               }}
-              className="text-xs font-serif font-bold text-[#70212B] hover:text-[#96702D] flex items-center gap-1.5 transition-colors"
+              className="text-xs font-serif font-bold text-[#70212B] hover:text-[#96702D] flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <span>🏛️</span>
-              <span className="font-tamil">{isTa ? 'கோயில் முகப்புக்குச் செல்க' : 'Back to Entrance Door'}</span>
+              <span className="font-tamil">{t.nav.backToDoor}</span>
             </button>
             <span className="text-[10px] text-[#96702D] tracking-wider uppercase font-serif">
-              {config.event.eventDate}
+              {config.opening.eventDate}
             </span>
           </div>
         </div>

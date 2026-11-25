@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Music, VolumeX } from 'lucide-react';
+import { Music } from 'lucide-react';
 import soundManager from '../utils/audioPlayer';
+import { useLanguage } from '../i18n/LanguageContext';
 
-export const FloatingMusicButton = ({ config, lang }) => {
+export const FloatingMusicButton = ({ config }) => {
+  const { isTa, t } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(false);
-  const isTa = lang === 'ta';
 
   useEffect(() => {
     return soundManager.addListener((playing) => {
@@ -13,7 +14,7 @@ export const FloatingMusicButton = ({ config, lang }) => {
   }, []);
 
   const toggleMusic = () => {
-    soundManager.toggle(config.audio.src);
+    soundManager.toggle(config.audio?.src || '/music.mpeg');
   };
 
   return (
@@ -31,8 +32,8 @@ export const FloatingMusicButton = ({ config, lang }) => {
             ? 'bg-gradient-to-br from-[#70212B] via-[#8C2C38] to-[#5C1B24] text-[#E4CA8E]'
             : 'bg-[#FFF9EE] text-[#70212B] hover:bg-[#FAF6ED]'
         }`}
-        title={isPlaying ? (isTa ? 'இசையை நிறுத்த' : 'Pause Music') : isTa ? 'மங்கள இசையை இயக்க' : 'Play Music'}
-        aria-label="Toggle Traditional Music"
+        title={isPlaying ? t.music.pauseTitle : t.music.playTitle}
+        aria-label={isPlaying ? t.music.pauseTitle : t.music.playTitle}
       >
         {/* Rotating Music-Wave Aura Rings when playing */}
         {isPlaying && (

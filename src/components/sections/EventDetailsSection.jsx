@@ -11,13 +11,14 @@ import {
   Navigation,
 } from 'lucide-react';
 import { GopuramCrest, KolamDivider, CornerOrnament, GoldSparkle } from '../common/Ornaments';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export const EventDetailsSection = ({ config, lang }) => {
-  const isTa = lang === 'ta';
+export const EventDetailsSection = ({ config }) => {
+  const { lang, isTa, t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -122,21 +123,19 @@ export const EventDetailsSection = ({ config, lang }) => {
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFF9EE] border border-[#C69A45]/40 shadow-2xs mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C69A45] animate-pulse" />
             <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-serif font-semibold text-[#96702D] font-tamil">
-              {isTa ? 'மங்கள விழா விவரங்கள்' : 'Auspicious Ceremony Details'}
+              {t.eventDetails.badge}
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#C69A45] animate-pulse" />
           </div>
 
           <h2 className="text-2xl sm:text-4xl md:text-[2.6rem] font-serif font-bold text-[#70212B] mt-1 mb-2 font-tamil tracking-tight drop-shadow-xs">
-            {isTa ? 'சுப முகூர்த்தம் & நன்னாள்' : 'Date, Muhurtham & Venue'}
+            {t.eventDetails.title}
           </h2>
 
           <KolamDivider className="max-w-[200px] sm:max-w-xs my-2.5 sm:my-3 text-[#C69A45]" />
 
           <p className="text-xs sm:text-sm md:text-base text-[#725D4C] font-serif max-w-xl mx-auto px-2 font-tamil leading-relaxed">
-            {isTa
-              ? `${config.event.kulaDeivamTamil} • ${config.event.subtitleTamil}`
-              : 'Detailed schedule of the sacred muhurtham timings and venue location.'}
+            {t.eventDetails.subtitle}
           </p>
         </div>
 
@@ -145,9 +144,7 @@ export const EventDetailsSection = ({ config, lang }) => {
         {/* ======================================================== */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-10">
           
-          {/* ------------------------------------------------------ */}
-          {/* CARD 1: AUSPICIOUS DATE (சுப நன்னாள்)                  */}
-          {/* ------------------------------------------------------ */}
+          {/* CARD 1: AUSPICIOUS DATE */}
           <div
             ref={(el) => (cardsRef.current[0] = el)}
             className="group relative bg-gradient-to-b from-[#FFFDF7] via-[#FAF4E6] to-[#F7EED8] rounded-2xl sm:rounded-3xl border-2 border-[#C69A45]/50 p-6 sm:p-7 text-center shadow-[0_10px_30px_rgba(198,154,69,0.12)] hover:shadow-lg hover:border-[#C69A45] hover:-translate-y-1 transition-all duration-300"
@@ -155,27 +152,24 @@ export const EventDetailsSection = ({ config, lang }) => {
             <CornerOrnament position="top-left" className="top-2 left-2 w-6 h-6 text-[#C69A45]/70" />
             <CornerOrnament position="top-right" className="top-2 right-2 w-6 h-6 text-[#C69A45]/70" />
 
-            {/* Circular Calendar Seal */}
             <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3.5 rounded-full bg-[#FFF9EE] border border-[#C69A45]/60 flex items-center justify-center text-[#70212B] shadow-2xs group-hover:scale-110 transition-transform">
               <Calendar className="w-6 h-6 text-[#70212B]" />
             </div>
 
             <span className="text-[10px] sm:text-[11px] uppercase tracking-widest font-serif font-bold text-[#96702D] block mb-1 font-tamil">
-              {isTa ? 'சுப நன்னாள்' : 'Auspicious Date'}
+              {t.eventDetails.dateBadge}
             </span>
 
             <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#70212B] my-1 leading-tight font-tamil">
-              {isTa ? config.event.dateFormattedTamil : config.event.dateFormattedEnglish}
+              {t.eventDetails.dateVal}
             </h3>
 
             <p className="text-[11px] sm:text-xs text-[#8E7B6C] font-serif italic mt-1.5 font-tamil">
-              {isTa ? config.event.tamilYearMonth : 'Sunday, 29th November 2026'}
+              {t.eventDetails.dateSub}
             </p>
           </div>
 
-          {/* ------------------------------------------------------ */}
-          {/* CARD 2: SACRED MUHURTHAM (Center Highlight Plaque)     */}
-          {/* ------------------------------------------------------ */}
+          {/* CARD 2: SACRED MUHURTHAM */}
           <div
             ref={(el) => (cardsRef.current[1] = el)}
             className="group relative bg-gradient-to-br from-[#4a1219] via-[#70212B] to-[#3a0d14] text-[#FFF9EE] rounded-2xl sm:rounded-3xl border-2 border-[#E4CA8E] p-6 sm:p-8 text-center shadow-[0_15px_40px_-10px_rgba(112,33,43,0.4),0_0_25px_rgba(228,202,142,0.2)] md:-translate-y-2 hover:-translate-y-3 transition-all duration-300"
@@ -183,28 +177,24 @@ export const EventDetailsSection = ({ config, lang }) => {
             <CornerOrnament position="top-left" className="top-2 left-2 w-6 h-6 text-[#E4CA8E]/80" />
             <CornerOrnament position="top-right" className="top-2 right-2 w-6 h-6 text-[#E4CA8E]/80" />
 
-            {/* Glowing Golden Clock Seal */}
             <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3.5 rounded-full bg-[#3d0d14] border border-[#E4CA8E] flex items-center justify-center text-[#E4CA8E] shadow-[0_0_15px_rgba(228,202,142,0.4)] group-hover:scale-110 transition-transform">
               <Clock className="w-6 h-6 text-[#E4CA8E]" />
             </div>
 
             <span className="text-[10px] sm:text-[11px] uppercase tracking-widest font-serif font-bold text-[#E4CA8E] block mb-1 font-tamil">
-              {isTa ? 'சுப முகூர்த்த நேரம்' : 'Auspicious Muhurtham'}
+              {t.eventDetails.muhurthamBadge}
             </span>
 
             <h3 className="text-xl sm:text-2xl md:text-[1.65rem] font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFFDF7] via-[#F8EAC9] to-[#E4CA8E] my-1 leading-tight font-tamil drop-shadow-sm">
-              {isTa ? config.event.muhurthamTimeTamil : config.event.muhurthamTimeEnglish}
+              {t.eventDetails.muhurthamVal}
             </h3>
 
-            {/* Auspicious Lagnam Badge */}
             <div className="inline-block px-3.5 py-1 rounded-full bg-black/40 border border-[#C69A45]/50 text-[10.5px] sm:text-xs font-serif font-semibold text-[#F8EAC9] mt-3 font-tamil">
-              {isTa ? config.event.muhurthamLagnamTamil : config.event.muhurthamLagnamEnglish}
+              {t.eventDetails.muhurthamTag}
             </div>
           </div>
 
-          {/* ------------------------------------------------------ */}
-          {/* CARD 3: VENUE & MANDAPAM (சுப மண்டபம்)                 */}
-          {/* ------------------------------------------------------ */}
+          {/* CARD 3: VENUE & MANDAPAM */}
           <div
             ref={(el) => (cardsRef.current[2] = el)}
             className="group relative bg-gradient-to-b from-[#FFFDF7] via-[#FAF4E6] to-[#F7EED8] rounded-2xl sm:rounded-3xl border-2 border-[#C69A45]/50 p-6 sm:p-7 text-center shadow-[0_10px_30px_rgba(198,154,69,0.12)] hover:shadow-lg hover:border-[#C69A45] hover:-translate-y-1 transition-all duration-300"
@@ -212,21 +202,20 @@ export const EventDetailsSection = ({ config, lang }) => {
             <CornerOrnament position="top-left" className="top-2 left-2 w-6 h-6 text-[#C69A45]/70" />
             <CornerOrnament position="top-right" className="top-2 right-2 w-6 h-6 text-[#C69A45]/70" />
 
-            {/* Circular Location Seal */}
             <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3.5 rounded-full bg-[#FFF9EE] border border-[#C69A45]/60 flex items-center justify-center text-[#70212B] shadow-2xs group-hover:scale-110 transition-transform">
               <MapPin className="w-6 h-6 text-[#70212B]" />
             </div>
 
             <span className="text-[10px] sm:text-[11px] uppercase tracking-widest font-serif font-bold text-[#96702D] block mb-1 font-tamil">
-              {isTa ? 'சுப மண்டபம்' : 'Venue'}
+              {t.eventDetails.venueBadge}
             </span>
 
             <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#70212B] my-1 leading-tight font-tamil">
-              {isTa ? config.venue.mandapamTamil : config.venue.mandapamEnglish}
+              {t.eventDetails.venueVal}
             </h3>
 
             <p className="text-[11px] sm:text-xs text-[#8E7B6C] font-serif mt-1.5 font-tamil leading-relaxed">
-              {isTa ? config.venue.fullAddressTamil : config.venue.fullAddressEnglish}
+              {t.eventDetails.venueAddress}
             </p>
           </div>
         </div>
@@ -241,7 +230,7 @@ export const EventDetailsSection = ({ config, lang }) => {
             className="w-full sm:w-auto min-h-[46px] px-6 py-3 rounded-full bg-gradient-to-r from-[#70212B] via-[#8c2a36] to-[#581720] hover:brightness-110 text-[#FFF9EE] border border-[#E4CA8E]/60 shadow-md font-serif font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer font-tamil"
           >
             <CalendarPlus className="w-4 h-4 text-[#E4CA8E]" />
-            <span>{isTa ? 'கூகுள் காலெண்டரில் சேர்க்க' : 'Add to Google Calendar'}</span>
+            <span>{t.eventDetails.addToCalendar}</span>
           </button>
 
           {/* Copy Address */}
@@ -252,12 +241,12 @@ export const EventDetailsSection = ({ config, lang }) => {
             {copied ? (
               <>
                 <Check className="w-4 h-4 text-green-600" />
-                <span className="text-green-700">{isTa ? 'முகவரி நகலெடுக்கப்பட்டது!' : 'Address Copied!'}</span>
+                <span className="text-green-700">{t.eventDetails.copied}</span>
               </>
             ) : (
               <>
                 <Copy className="w-4 h-4 text-[#C69A45]" />
-                <span>{isTa ? 'முழு முகவரி நகலெடுக்க' : 'Copy Full Address'}</span>
+                <span>{t.eventDetails.copyAddress}</span>
               </>
             )}
           </button>

@@ -15,36 +15,29 @@ import {
   CornerOrnament,
   GoldSparkle,
 } from '../common/Ornaments';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export const BlessingsSection = ({ config, lang }) => {
-  const isTa = lang === 'ta';
+export const BlessingsSection = ({ config }) => {
+  const { lang, isTa, t } = useLanguage();
   const [guestName, setGuestName] = useState('');
   const [guestWish, setGuestWish] = useState('');
   const [guestCount, setGuestCount] = useState('2');
-  const [submittedWishes, setSubmittedWishes] = useState([
-    {
-      name: isTa ? 'உறவினர்கள் & நண்பர்கள்' : 'Dear Relatives & Friends',
-      message: isTa
-        ? 'R. கிருஷ்வந்த் & R. சுபத்ரா ஆகிய செல்வங்கள் நீண்ட ஆயுளும், நிறைந்த ஆரோக்கியமும், கல்வியில் மேன்மையும் பெற்று வாழ குலதெய்வத்தை வேண்டுகிறோம்!'
-        : 'Wishing little Krishwanth & Subhadra a blessed, vibrant, healthy, and joy-filled life! Hearty congratulations!',
-      time: 'Just now',
-    },
-    {
-      name: isTa ? 'பெரியோர்கள் திருவருள்' : 'Family Elders',
-      message: isTa
-        ? 'இல்லத்துச் செல்வங்களுக்கு மங்கள செவிப் பொன் சேர்ப்பு விழா இனிதே நடைபெற எங்களின் மனமார்ந்த நல்வாழ்த்துகள்!'
-        : 'May the divine blessings of Kula Deivam always protect and prosper our dear children.',
-      time: '1 hour ago',
-    },
-  ]);
+  const [submittedWishes, setSubmittedWishes] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const sectionRef = useRef(null);
   const cardRef = useRef(null);
+
+  // Sync initial sample wishes with active language
+  useEffect(() => {
+    if (t.blessings?.sampleWishes) {
+      setSubmittedWishes(t.blessings.sampleWishes);
+    }
+  }, [t.blessings]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -74,20 +67,6 @@ export const BlessingsSection = ({ config, lang }) => {
     return () => ctx.revert();
   }, []);
 
-  const quickWishes = isTa
-    ? [
-        '🌸 நீண்ட ஆயுளும் நிறைந்த ஆரோக்கியமும் வாழ்க!',
-        '✨ குலதெய்வ அருளால் சகல சௌபாக்கியங்களும் பெருகட்டும்!',
-        '👑 ஞானமும் கல்வியும் சிறந்து விளங்க வாழ்த்துகிறோம்!',
-        '💖 இல்லத்துச் செல்வங்களுக்கு மனமார்ந்த நல்வாழ்த்துகள்!',
-      ]
-    : [
-        '🌸 Wishing you a blessed, healthy, and joyful life!',
-        '✨ May divine grace always protect and prosper you!',
-        '👑 With heartfelt love and warmest blessings!',
-        '💖 Congratulations to the proud parents and family!',
-      ];
-
   const handleSubmitWish = (e) => {
     e.preventDefault();
     if (!guestName.trim() || !guestWish.trim()) return;
@@ -95,7 +74,7 @@ export const BlessingsSection = ({ config, lang }) => {
     const newWish = {
       name: guestName.trim(),
       message: guestWish.trim(),
-      time: 'Just now',
+      time: isTa ? 'சற்றுமுன்' : 'Just now',
     };
 
     setSubmittedWishes([newWish, ...submittedWishes]);
@@ -115,7 +94,7 @@ export const BlessingsSection = ({ config, lang }) => {
 
   const handleWhatsAppRSVP = () => {
     const baseMsg = isTa ? config.rsvp.prefilledMessageTamil : config.rsvp.prefilledMessageEnglish;
-    const fullMsg = `${baseMsg} ${guestCount} பேர்.\nஅழைப்பிதழ்: ${window.location.href}`;
+    const fullMsg = `${baseMsg} ${guestCount} ${isTa ? 'பேர்' : 'guests'}.\n${window.location.href}`;
     window.open(`https://api.whatsapp.com/send?phone=${config.rsvp.whatsappNumber}&text=${encodeURIComponent(fullMsg)}`, '_blank');
   };
 
@@ -148,16 +127,20 @@ export const BlessingsSection = ({ config, lang }) => {
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFF9EE] border border-[#C69A45]/40 shadow-2xs mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C69A45] animate-pulse" />
             <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-serif font-semibold text-[#96702D] font-tamil">
-              {isTa ? 'அன்பின் ஆசிகள் & வருகை உறுதி' : 'Shower Your Divine Blessings & RSVP'}
+              {t.blessings.badge}
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#C69A45] animate-pulse" />
           </div>
 
           <h2 className="text-2xl sm:text-4xl md:text-[2.6rem] font-serif font-bold text-[#70212B] mt-1 mb-2 font-tamil tracking-tight drop-shadow-xs">
-            {isTa ? 'குழந்தைகளுக்கு நல்வாழ்த்துகள்' : 'Blessings for the Children'}
+            {t.blessings.title}
           </h2>
 
           <KolamDivider className="max-w-[200px] sm:max-w-xs my-2.5 sm:my-3 text-[#C69A45]" />
+
+          <p className="text-xs sm:text-sm font-serif italic text-[#725D4C] max-w-lg mx-auto px-2 font-tamil">
+            {t.blessings.subtitle}
+          </p>
         </div>
 
         {/* ======================================================== */}
@@ -172,7 +155,7 @@ export const BlessingsSection = ({ config, lang }) => {
           {/* Central Sacred Om Seal */}
           <div className="flex justify-center mb-3">
             <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#2e0910] border-2 border-[#E4CA8E] flex items-center justify-center font-tamil font-bold text-[#E4CA8E] text-xl sm:text-2xl shadow-[0_0_15px_rgba(228,202,142,0.4)]">
-              ஓம்
+              {isTa ? 'ஓம்' : 'ॐ'}
             </div>
           </div>
 
@@ -182,9 +165,7 @@ export const BlessingsSection = ({ config, lang }) => {
           </blockquote>
 
           <p className="text-[11px] sm:text-xs text-[#E4CA8E]/85 font-serif italic max-w-lg mx-auto mb-4 font-tamil">
-            {isTa
-              ? `${config.venue.mandapamTamil}, ${config.venue.addressTamil} - தங்களின் மேலான வருகையே எங்கள் இல்ல விழாவிற்கு மெருகூட்டும்.`
-              : 'Your gracious presence and loving blessings are the greatest gift for our beloved children.'}
+            {t.blessings.rsvpNote}
           </p>
 
           <div className="inline-block h-px w-20 sm:w-24 bg-gradient-to-r from-transparent via-[#E4CA8E] to-transparent mb-4" />
@@ -192,20 +173,17 @@ export const BlessingsSection = ({ config, lang }) => {
           {/* Family Sign-off */}
           <div className="text-center">
             <p className="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#E4CA8E]/80 mb-1 font-serif font-tamil">
-              {isTa ? config.event.withLoveTamil : config.event.withLoveEnglish}
+              {t.thankYou.withLove}
             </p>
             <p className="text-lg sm:text-xl font-serif font-bold text-[#FFFDF7] font-tamil">
-              {isTa ? `${config.parents.fatherTamil} & ${config.parents.motherTamil} குடும்பத்தினர்` : `${config.parents.fatherEnglish} & ${config.parents.motherEnglish} Family`}
-            </p>
-            <p className="text-[10.5px] sm:text-xs text-[#E4CA8E]/80 mt-1 font-tamil">
-              {isTa ? 'மற்றும் தாய்மாமன், உற்றார், உறவினர்கள், நண்பர்கள்' : '& Maternal Uncle, Family Elders, Relatives & Friends'}
+              {t.thankYou.familyNames}
             </p>
           </div>
 
           {/* WhatsApp RSVP Button */}
           <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
             <div className="flex items-center gap-2 bg-black/40 rounded-full px-3.5 py-1.5 border border-[#C69A45]/50 text-xs text-[#E4CA8E]">
-              <span className="font-tamil">{isTa ? 'உறுப்பினர்கள்:' : 'Guests:'}</span>
+              <span className="font-tamil">{t.blessings.guestCountLabel}:</span>
               <select
                 value={guestCount}
                 onChange={(e) => setGuestCount(e.target.value)}
@@ -224,7 +202,7 @@ export const BlessingsSection = ({ config, lang }) => {
               className="w-full sm:w-auto min-h-[46px] px-6 py-2.5 sm:py-3 rounded-full bg-[#1b5e20] hover:bg-[#2e7d32] text-white font-serif font-bold text-xs sm:text-sm border border-emerald-400/50 shadow-md inline-flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer font-tamil"
             >
               <MessageCircle className="w-4 h-4 text-emerald-300" />
-              <span>{isTa ? 'வாட்ஸ்அப்பில் வருகையை உறுதிசெய்க (RSVP)' : 'Confirm RSVP via WhatsApp'}</span>
+              <span>{t.blessings.whatsappRsvpBtn}</span>
             </button>
           </div>
         </div>
@@ -243,17 +221,17 @@ export const BlessingsSection = ({ config, lang }) => {
           <div className="flex items-center gap-2 mb-4 text-[#70212B]">
             <Sparkles className="w-5 h-5 text-[#C69A45] shrink-0" />
             <h3 className="text-base sm:text-xl font-serif font-bold font-tamil">
-              {isTa ? 'குழந்தைகளுக்கு தங்களின் மங்கள ஆசிகள்' : 'Leave a Blessing for the Children'}
+              {t.blessings.title}
             </h3>
           </div>
 
           {/* Quick Blessing Chips */}
           <div className="mb-4">
             <span className="text-[10px] sm:text-[11px] font-serif font-semibold text-[#96702D] block mb-2 font-tamil">
-              {isTa ? '✨ உடனடி வாழ்த்து வாசகங்கள் (கிளிக் செய்க):' : '✨ Quick Blessing Messages (Click to fill):'}
+              {t.blessings.quickWishesLabel}
             </span>
             <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {quickWishes.map((msg, idx) => (
+              {t.blessings.quickWishes.map((msg, idx) => (
                 <button
                   key={idx}
                   type="button"
@@ -271,7 +249,7 @@ export const BlessingsSection = ({ config, lang }) => {
             <div>
               <input
                 type="text"
-                placeholder={isTa ? 'தங்கள் பெயர் / குடும்பப் பெயர் *' : 'Your Name / Family Name *'}
+                placeholder={t.blessings.namePlaceholder}
                 value={guestName}
                 onChange={(e) => setGuestName(e.target.value)}
                 required
@@ -282,11 +260,7 @@ export const BlessingsSection = ({ config, lang }) => {
             <div>
               <textarea
                 rows="3"
-                placeholder={
-                  isTa
-                    ? 'செல்வங்கள் கிருஷ்வந்த் & சுபத்ராவிற்கு தங்களின் அன்பான வாழ்த்துச் செய்தி...'
-                    : 'Your loving blessing message for our beloved children...'
-                }
+                placeholder={t.blessings.msgPlaceholder}
                 value={guestWish}
                 onChange={(e) => setGuestWish(e.target.value)}
                 required
@@ -300,13 +274,13 @@ export const BlessingsSection = ({ config, lang }) => {
                 className="min-h-[46px] px-7 py-3 rounded-full bg-gradient-to-r from-[#70212B] via-[#8c2a36] to-[#581720] hover:brightness-110 text-[#FFF9EE] font-serif font-bold text-xs sm:text-sm shadow-md border border-[#E4CA8E]/50 flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer font-tamil"
               >
                 <Send className="w-4 h-4 text-[#E4CA8E]" />
-                <span>{isTa ? 'வாழ்த்தை சமர்ப்பிக்க' : 'Send Blessing'}</span>
+                <span>{t.blessings.sendBtn}</span>
               </button>
 
               {showSuccess && (
-                <div className="flex items-center justify-center gap-2 text-xs font-serif font-semibold text-emerald-800 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-300 animate-fadeIn">
+                <div className="flex items-center justify-center gap-2 text-xs font-serif font-semibold text-emerald-800 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-300 animate-fadeIn font-tamil">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span className="font-tamil">{isTa ? 'வாழ்த்து பெறப்பட்டது! மிக்க நன்றி!' : 'Blessing sent with love! Thank you!'}</span>
+                  <span>{t.blessings.successMsg}</span>
                 </div>
               )}
             </div>
@@ -316,7 +290,7 @@ export const BlessingsSection = ({ config, lang }) => {
           {submittedWishes.length > 0 && (
             <div className="mt-8 pt-6 border-t border-[#C69A45]/30 space-y-3">
               <span className="text-[10px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#96702D] block mb-2 font-tamil">
-                {isTa ? 'அண்மைய ஆசிகள் • Recent Blessings' : 'Recent Blessings'}
+                {t.blessings.recentTitle}
               </span>
               {submittedWishes.map((item, idx) => (
                 <div
